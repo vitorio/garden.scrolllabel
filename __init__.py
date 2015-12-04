@@ -47,6 +47,8 @@ class ScrollLabel(Widget):
     halign = OptionProperty("center", options=("left", "center", "right"))
     line_height = NumericProperty("")
     markup = BooleanProperty(False)
+    outline = BooleanProperty(False)
+    outline_size = NumericProperty("1dp")
 
     def __init__(self, **kwargs):
         super(ScrollLabel, self).__init__(**kwargs)
@@ -57,7 +59,9 @@ class ScrollLabel(Widget):
             font_name=self._trigger_refresh_label,
             halign=self._trigger_refresh_label,
             width=self._trigger_refresh_label,
-            markup=self._trigger_refresh_label)
+            markup=self._trigger_refresh_label,
+            outline=self._trigger_refresh_label,
+            outline_size=self._trigger_refresh_label)
         self._trigger_refresh_label()
 
     def refresh_label(self, *args):
@@ -67,7 +71,9 @@ class ScrollLabel(Widget):
                      halign=self.halign,
                      font_size=self.font_size,
                      font_name=self.font_name,
-                     markup=self.markup)
+                     markup=self.markup,
+                     outline=self.outline,
+                     outline_size=self.outline_size)
         label.resolve_font_name()
         label.render()
 
@@ -76,6 +82,8 @@ class ScrollLabel(Widget):
         font_size = self.font_size
         halign = self.halign
         markup = self.markup
+        outline = self.outline
+        outline_size = self.outline_size
         data = ({
             "index": index,
             "viewclass": "ScrollLabelPart",
@@ -86,6 +94,8 @@ class ScrollLabel(Widget):
             "size_hint_y": None,
             "halign": halign,
             "markup": markup,
+            "outline": outline,
+            "outline_size": outline_size,
         } for index, line in enumerate(label._cached_lines))
         self.ids.rv.data = data
 
